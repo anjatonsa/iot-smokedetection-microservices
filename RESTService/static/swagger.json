@@ -1,0 +1,227 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Smoke Detection API",
+    "version": "1.0.0",
+    "description": "API for managing smoke detection measurements"
+  },
+  "paths": {
+    "/get/{id}": {
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "description": "UID of the measurement",
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "get": {
+        "summary": "Get a measurement by UID",
+        "responses": {
+          "200": {
+            "description": "Successful get operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Measurement"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Measurement not found"
+          }
+        }
+      }
+    },
+    "/getall": {
+      "get": {
+        "summary": "Get all measurements",
+        "responses": {
+          "200": {
+            "description": "Successful get all operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Measurement"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/create": {
+      "post": {
+        "summary": "Create a new measurement",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Measurement"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Measurement created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Measurement"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request. Invalid data provided."
+          }
+        }
+      }
+    },
+    "/update/{id}": {
+      "put": {
+        "summary": "Update an existing measurement",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "UID of the measurement",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Measurement"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Measurement updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Measurement"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request. Invalid data provided."
+          },
+          "404": {
+            "description": "Measurement not found"
+          }
+        }
+      }
+    },
+    "/delete/{id}": {
+      "delete": {
+        "summary": "Delete a measurement by UID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "ID of the measurement",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Measurement deleted successfully"
+          },
+          "404": {
+            "description": "Measurement not found"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Measurement": {
+        "type": "object",
+        "properties": {
+          "UID": {
+            "type": "integer",
+            "description": "Unique identifier for the measurement"
+          },
+          "Temperature": {
+            "type": "number",
+            "description": "Temperature measurement"
+          },
+          "Humidity": {
+            "type": "number",
+            "description": "Humidity measurement"
+          },
+          "TVOC": {
+            "type": "number",
+            "description": "TVOC measurement"
+          },
+          "eCO2": {
+            "type": "number",
+            "description": "eCO2 measurement"
+          },
+          "RawH2": {
+            "type": "number",
+            "description": "Raw H2 measurement"
+          },
+          "RawEthanol": {
+            "type": "number",
+            "description": "Raw Ethanol measurement"
+          },
+          "Pressure": {
+            "type": "number",
+            "description": "Pressure measurement"
+          },
+          "PM10": {
+            "type": "number",
+            "description": "PM1.0 measurement"
+          },
+          "PM25": {
+            "type": "number",
+            "description": "PM2.5 measurement"
+          },
+          "NC05": {
+            "type": "number",
+            "description": "NC0.5 measurement"
+          },
+          "NC10": {
+            "type": "number",
+            "description": "NC1.0 measurement"
+          },
+          "NC25": {
+            "type": "number",
+            "description": "NC2.5 measurement"
+          },
+          "FireAlarm": {
+            "type": "boolean",
+            "description": "Fire alarm status"
+          },
+          "Timestamp": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Timestamp of the measurement"
+          }
+        }
+      }
+    }
+  }
+}

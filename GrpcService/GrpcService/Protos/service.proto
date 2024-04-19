@@ -1,0 +1,61 @@
+﻿syntax = "proto3";
+import "google/protobuf/empty.proto";
+import "google/protobuf/timestamp.proto";
+option csharp_namespace = "CRUDService";
+
+package crudservice;
+
+service CRUDService {
+
+    rpc Create(Measurement) returns (Measurement);
+    rpc Read(MeasurementId) returns (Measurement);
+    rpc ReadAll(google.protobuf.Empty) returns (Measurements);
+    rpc Update(Measurement) returns (Measurement);
+    rpc Delete(MeasurementId) returns (MessageResponse);
+
+    rpc MinValue(AggregationParam) returns (AggregationResult);
+    rpc MaxValue(AggregationParam) returns (AggregationResult);
+    rpc AvgValue(AggregationParam) returns (AggregationResult);
+    rpc SumValue(AggregationParam) returns (AggregationResult);
+}
+
+message MessageResponse {
+  string message = 1;
+}
+
+message MeasurementId {
+   int32 UID = 1;
+}
+
+message Measurement {
+    int32 UID = 1;
+    double Temperature = 2;
+    double Humidity = 3;
+    int32 TVOC = 4;
+    double eCO2 = 5;
+    double RawH2 = 6;
+    double RawEthanol = 7;
+    double Pressure = 8;
+    double PM10 = 9;
+    double PM25 = 10;
+    double NC05 = 11;
+    double NC10 = 12;
+    double NC25 = 13;
+    bool FireAlarm = 14;
+    google.protobuf.Timestamp Timestamp = 15;
+}
+
+message Measurements{
+    repeated Measurement measurementsData = 1;
+}
+
+message AggregationParam {
+    google.protobuf.Timestamp StartTime = 1;
+    google.protobuf.Timestamp EndTime = 2;
+    string DataField = 3;
+}
+
+message AggregationResult{
+    string result=1;
+}
+
