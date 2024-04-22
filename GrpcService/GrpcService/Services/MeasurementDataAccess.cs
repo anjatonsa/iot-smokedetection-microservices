@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using GrpcService.DbContext;
 using GrpcService.Models;
 using Microsoft.Extensions.Options;
 using MongoDB.Bson;
@@ -12,14 +13,8 @@ namespace GrpcService.Services
 
         public MeasurementDataAccess(IOptions<MongoDbConfiguration> settings)
         {
-            var mongoClient = new MongoClient(
-                settings.Value.ConnectionString);
-
-            var mongoDatabase = mongoClient.GetDatabase(
-                settings.Value.DatabaseName);
-
-            _measurementsCollection = mongoDatabase.GetCollection<Measurement>(
-                settings.Value.CollectionName);
+            var dbContext = new MongoDbContext(settings);
+            _measurementsCollection = dbContext._measurementsCollection;
         }
 
         public async Task<List<Measurement>> GetAsync() =>
